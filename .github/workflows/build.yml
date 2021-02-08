@@ -1,0 +1,31 @@
+name: Build
+
+on: push
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: use nodejs v ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install and package
+        run: npm i 
+      - name: lint
+        run: npm run lint
+      - name: tests
+        run: npm run test
+        
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    name: deployment
+    needs: install
+    steps:
+      - name: deploy
+        run: curl -X POST -d {} ${{ secrets.NETLIFY_HOOKS }}
