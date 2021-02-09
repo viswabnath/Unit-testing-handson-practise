@@ -1,6 +1,6 @@
 import { html, css, LitElement } from 'lit-element';
-import { localize, LocalizeMixin } from '@lion/localize';
-import './inline-data.js';
+import { LocalizeMixin } from '@lion/localize';
+import '../../locale/inline-data.js';
 
 export class DashboardOverview extends LocalizeMixin(LitElement) {
   static get styles() {
@@ -40,31 +40,28 @@ export class DashboardOverview extends LocalizeMixin(LitElement) {
     this.data = [
       {
         title: 'Home Loan',
-        image: 'images/Home-Loans.jpg.cf.jpg',
+        image: 'images/Home-Loans.jpg',
       },
       {
         title: 'Personal Loan',
-        image: 'images/personal-Loan.jpg.cf.jpg',
+        image: 'images/personal-Loan.jpg',
       },
       {
         title: 'Car Loan',
-        image: 'images/car loan.jpg.cf.jpg',
+        image: 'images/car loan.jpg',
       },
       {
         title: 'Vacation Loan',
-        image: 'images/vacation-loans.jpg.cf.jpg',
+        image: 'images/vacation-loans.jpg',
       },
     ];
   }
 
   _renderdashboardcard() {
     return this.data.map(card => {
-      const { image } = card;
+      const { title, image } = card;
       return html`
-        <dashboard-menu
-          imageURL="../src/${image}"
-          title=${localize.msg('change-language:data.title')}
-        >
+        <dashboard-menu imageURL="../src/${image}" title=${title}>
         </dashboard-menu>
       `;
     });

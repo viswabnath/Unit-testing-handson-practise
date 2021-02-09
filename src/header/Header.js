@@ -1,6 +1,6 @@
 import { html, css, LitElement } from 'lit-element';
 import { localize, LocalizeMixin } from '@lion/localize';
-import './inline-data.js';
+import '../../locale/inline-data.js';
 
 export class Header extends LocalizeMixin(LitElement) {
   static get styles() {

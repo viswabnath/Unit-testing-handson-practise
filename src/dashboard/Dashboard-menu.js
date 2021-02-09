@@ -1,6 +1,7 @@
 import { html, css, LitElement } from 'lit-element';
+import { LocalizeMixin } from '@lion/localize';
 
-export class DashboardMenu extends LitElement {
+export class DashboardMenu extends LocalizeMixin(LitElement) {
   static get styles() {
     return css`
       :host {
