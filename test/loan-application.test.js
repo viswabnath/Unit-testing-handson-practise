@@ -10,15 +10,17 @@ describe('LoanApplication', () => {
     expect(el.counter).to.equal(5);
   });
 
-  it('increases the counter on button click', async () => {
+  /* it('increases the counter on button click', async () => {
     const el = await fixture(html`<loan-application></loan-application>`);
     el.shadowRoot.querySelector('button').click();
 
     expect(el.counter).to.equal(6);
-  });
+  }); */
 
   it('can override the title via attribute', async () => {
-    const el = await fixture(html`<loan-application title="attribute title"></loan-application>`);
+    const el = await fixture(
+      html`<loan-application title="attribute title"></loan-application>`
+    );
 
     expect(el.title).to.equal('attribute title');
   });
