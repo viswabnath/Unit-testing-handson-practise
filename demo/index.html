@@ -1,29 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      body {
-        background: #fafafa;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="demo"></div>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background: #ddd;
+      ;
+    }
+  </style>
+</head>
+<body>
+ <dash-board >
+   <header></header>
+ </dash-board>
 
-    <script type="module">
-      import { html, render } from 'lit-html';
-      import '../loan-application.js';
-
-      const title = 'Loan App!';
-      render(
-        html`
-          <loan-application .title=${title}>
-            some more light-dom
-          </loan-application>
-        `,
-        document.querySelector('#demo')
-      );
-    </script>
-  </body>
+  <script type="module" src="../src/Dashboard.js"></script>
+  <script type="module" src="../src/Header.js"></script>
+  <script type="module" src="../src/Dashboard-overview.js"></script>
+  <script type="module" src="../src/Dashboard-menu.js"></script>
+</body>
 </html>
