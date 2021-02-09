@@ -15,12 +15,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: install and package
-        run: npm i 
+        run: npm i
       - name: lint
         run: npm run lint
       - name: tests
         run: npm run test
-        
+      - name: build
+        run: npm run build
+
   deploy:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
