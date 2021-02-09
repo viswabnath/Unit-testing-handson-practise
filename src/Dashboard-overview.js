@@ -1,5 +1,5 @@
 import { html, css, LitElement } from 'lit-element';
-import { LocalizeMixin } from '@lion/localize';
+import { localize, LocalizeMixin } from '@lion/localize';
 import './inline-data.js';
 
 export class DashboardOverview extends LocalizeMixin(LitElement) {
@@ -56,20 +56,19 @@ export class DashboardOverview extends LocalizeMixin(LitElement) {
       },
     ];
   }
-  // _renderdashboardcard  =() => {
-  //   return this.data.map((card) => {
-  //     const { title, image } = card;
-  //     return html`
-  //             <dashboard-menu
-  //                 imageURL="../src/${image}"
 
-  //                 title=${localize.msg('change-language:data.title')}
-
-  //             >
-  //             </dashboard-menu>
-  //         `;
-  //   });
-  // }
+  _renderdashboardcard() {
+    return this.data.map(card => {
+      const { image } = card;
+      return html`
+        <dashboard-menu
+          imageURL="../src/${image}"
+          title=${localize.msg('change-language:data.title')}
+        >
+        </dashboard-menu>
+      `;
+    });
+  }
 
   render() {
     return html` <div class="container">${this._renderdashboardcard()}</div> `;
