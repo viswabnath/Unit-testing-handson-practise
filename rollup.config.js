@@ -23,7 +23,7 @@ const baseConfig = createSpaConfig({
 export default merge(baseConfig, {
   // if you use createSpaConfig, you can use your index.html as entrypoint,
   // any <script type="module"> inside will be bundled by rollup
-  input: './demo/index.html',
+  input: './index.html',
 
   // alternatively, you can use your JS as entrypoint for rollup and
   // optionally set a HTML template manually
