@@ -4,6 +4,7 @@ import { Router } from '@vaadin/router';
 import '../header/Header.js';
 import './Dashboard-overview.js';
 import '../LoanBasicDetails/BasicDetails.js';
+import '../Customer/Customer-details.js';
 
 export class Dashboard extends LitElement {
   static get styles() {
@@ -21,6 +22,7 @@ export class Dashboard extends LitElement {
   render() {
     return html`
       <loan-header></loan-header>
+      <a href="customer">Customer</a>
       <div id="outlet"></div>
     `;
   }
@@ -35,6 +37,7 @@ export class Dashboard extends LitElement {
     router.setRoutes([
       { path: '/', component: 'dashboard-overview' },
       { path: '/details', component: 'basic-details' },
+      { path: '/customer', component: 'customer-details' },
     ]);
   }
 }
