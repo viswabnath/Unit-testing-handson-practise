@@ -1,9 +1,11 @@
+/* eslint-disable class-methods-use-this */
 import { html, css, LitElement } from 'lit-element';
 import { Required, MinMaxNumber } from '@lion/form-core';
 import '@lion/input/lion-input.js';
 import '@lion/input-amount/lion-input-amount.js';
 import '@lion/input-range/lion-input-range.js';
 import '@lion/button/lion-button.js';
+import { Router } from '@vaadin/router';
 // import {inwords} '../utils/numToWord.js';
 
 export class BasicDetails extends LitElement {
@@ -80,6 +82,7 @@ export class BasicDetails extends LitElement {
           <div class="basic-form">
             <lion-input
               label="Name"
+              name="Loan name"
               .validators="${[
                 new Required(
                   {},
@@ -115,6 +118,7 @@ export class BasicDetails extends LitElement {
 
             <lion-input-range
               style="max-width: 400px;"
+              name="Loan tenure"
               min="1"
               max="20"
               step="1"
@@ -128,14 +132,21 @@ export class BasicDetails extends LitElement {
 
       <div class="btn-prev-nxt-parent">
         <lion-button class="btn-previous">Prev</lion-button>
-        <lion-button class="btn-next">Next</lion-button>
+        <lion-button @click=${this._toCustomer} class="btn-next"
+          >Next</lion-button
+        >
       </div>
     </div>`;
   }
 
-  // _numToWord(){
-  //   this.shadowRoot.querySelector(".word").innerHTML = inwords(this.shadowRoot.querySelector(".basic-web-form").elements["amount"].value);
+  /* _numToWord() {
+    this.shadowRoot.querySelector('.word').innerHTML = inwords(
+      this.shadowRoot.querySelector('.basic-web-form').elements['amount'].value
+    );
+  } */
 
-  // }
+  _toCustomer() {
+    Router.go('/customer');
+  }
 }
 customElements.define('basic-details', BasicDetails);
