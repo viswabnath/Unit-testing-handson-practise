@@ -68,7 +68,7 @@ export class BasicDetails extends LitElement {
 
   constructor() {
     super();
-    this.duration = 5;
+    this.amount = 10000;
     this.range = 2;
   }
 
@@ -94,10 +94,10 @@ export class BasicDetails extends LitElement {
               id="amount"
               .validators="${[
                 new MinMaxNumber(
-                  { min: 100000, max: 10000000 },
+                  { min: 10000, max: 10000000 },
                   {
                     getMessage: () =>
-                      'Should enter an amount greater than one lakh ',
+                      'Should enter an amount greater than ten thousand ',
                   }
                 ),
                 new Required(
@@ -105,7 +105,7 @@ export class BasicDetails extends LitElement {
                   { getMessage: () => 'Amount is a required field' }
                 ),
               ]}"
-              .modelValue="${this.duration}"
+              .modelValue="${this.amount}"
               label="Amount"
             >
               @keyup = ${this._numToWord}
@@ -119,7 +119,7 @@ export class BasicDetails extends LitElement {
               max="20"
               step="1"
               .modelValue="${this.range}"
-              label="Loan Period"
+              label="Loan Period (in years)"
             >
             </lion-input-range>
           </div>
