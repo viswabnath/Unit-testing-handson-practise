@@ -27,8 +27,11 @@
     "@lion/input-amount": "^0.8.16",
     "@lion/input-datepicker": "^0.18.18",
     "@lion/input-email": "^0.9.16",
+    "@lion/input-range": "^0.5.16",
     "@lion/localize": "^0.15.5",
     "@lion/validate-messages": "^0.3.16",
+    "@vaadin/router": "^1.7.3",
+    "@web/rollup-plugin-copy": "^0.2.0",
     "lit-element": "^2.4.0",
     "lit-html": "^1.3.0"
   },
