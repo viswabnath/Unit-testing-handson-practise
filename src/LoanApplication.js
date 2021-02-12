@@ -1,5 +1,7 @@
 import { html, css, LitElement } from 'lit-element';
 
+import './dashboard/Dashboard.js';
+
 export class LoanApplication extends LitElement {
   static get styles() {
     return css`
