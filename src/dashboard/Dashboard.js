@@ -1,4 +1,5 @@
 import { html, css, LitElement } from 'lit-element';
+import '../Customer/Customer-details.js';
 
 export class Dashboard extends LitElement {
   static get styles() {
@@ -16,7 +17,9 @@ export class Dashboard extends LitElement {
   render() {
     return html`
       <loan-header></loan-header>
+
       <dashboard-overview></dashboard-overview>
+      <customer-details> form details</customer-details>
     `;
   }
 }
