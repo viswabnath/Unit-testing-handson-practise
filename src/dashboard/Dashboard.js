@@ -22,7 +22,6 @@ export class Dashboard extends LitElement {
   render() {
     return html`
       <loan-header></loan-header>
-      <a href="customer">Customer</a>
       <div id="outlet"></div>
     `;
   }
