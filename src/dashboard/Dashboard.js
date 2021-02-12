@@ -33,7 +33,7 @@ export class Dashboard extends LitElement {
     const outlet = this.shadowRoot.getElementById('outlet');
     const router = new Router(outlet);
     router.setRoutes([
-      { path: '/dashBoard', component: 'dashboard-overview' },
+      { path: '/', component: 'dashboard-overview' },
       { path: '/details', component: 'basic-details' },
     ]);
   }
