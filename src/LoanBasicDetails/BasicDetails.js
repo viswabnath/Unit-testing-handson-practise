@@ -6,9 +6,10 @@ import '@lion/input-amount/lion-input-amount.js';
 import '@lion/input-range/lion-input-range.js';
 import '@lion/button/lion-button.js';
 import { Router } from '@vaadin/router';
+import { LocalizeMixin, localize } from '@lion/localize';
 // import {inwords} '../utils/numToWord.js';
 
-export class BasicDetails extends LitElement {
+export class BasicDetails extends LocalizeMixin(LitElement) {
   static get styles() {
     return css`
       :host {
@@ -76,13 +77,16 @@ export class BasicDetails extends LitElement {
 
   render() {
     return html` <div class="form-basic">
-      <h2>Loan Details</h2>
+      <h2>${localize.msg('change-language:loan-details')}</h2>
       <lion-form>
         <form class="basic-web-form">
           <div class="basic-form">
             <lion-input
-              label="Name"
-              name="Loan name"
+              label="${localize.msg('change-language:Name')}"
+              type="text"
+              name="name"
+              id="name"
+              class="name"
               .validators="${[
                 new Required(
                   {},
@@ -95,6 +99,7 @@ export class BasicDetails extends LitElement {
               type="Number"
               name="amount"
               id="amount"
+              class="amount"
               .validators="${[
                 new MinMaxNumber(
                   { min: 10000, max: 10000000 },
@@ -109,7 +114,7 @@ export class BasicDetails extends LitElement {
                 ),
               ]}"
               .modelValue="${this.amount}"
-              label="Amount"
+              label="${localize.msg('change-language:Amount')}"
             >
               @keyup = ${this._numToWord}
             </lion-input-amount>
@@ -118,12 +123,14 @@ export class BasicDetails extends LitElement {
 
             <lion-input-range
               style="max-width: 400px;"
-              name="Loan tenure"
               min="1"
               max="20"
               step="1"
               .modelValue="${this.range}"
-              label="Loan Period (in years)"
+              label="${localize.msg('change-language:loanPeriod')}"
+              name="Period"
+              id="Period"
+              class="period"
             >
             </lion-input-range>
           </div>
@@ -131,9 +138,11 @@ export class BasicDetails extends LitElement {
       </lion-form>
 
       <div class="btn-prev-nxt-parent">
-        <lion-button class="btn-previous">Prev</lion-button>
+        <lion-button class="btn-previous" @click=${this._toDashboard}
+          >${localize.msg('change-language:btnPrev')}</lion-button
+        >
         <lion-button @click=${this._toCustomer} class="btn-next"
-          >Next</lion-button
+          >${localize.msg('change-language:btnNext')}</lion-button
         >
       </div>
     </div>`;
@@ -145,8 +154,27 @@ export class BasicDetails extends LitElement {
     );
   } */
 
+  _captureDetails() {
+    // let _name = this.shadowRoot.querySelector('basic-web-form').elements["name"].value;
+    // let _amount = this.shadowRoot.querySelector('basic-web-form').elements["amount"].value;
+    // let _period = this.shadowRoot.querySelector('basic-web-form').elements["period"].value;
+
+    const _name = this.shadowRoot.querySelector('.name').value;
+    const _amount = this.shadowRoot.querySelector('.amount').value;
+    const _period = this.shadowRoot.querySelector('.period').value;
+
+    // eslint-disable-next-line no-console
+    console.log(_name, _amount, _period);
+    // e.preventDefault();
+  }
+
   _toCustomer() {
-    Router.go('/customer');
+    this._captureDetails();
+    Router.go('/emidetails');
+  }
+
+  _toDashboard() {
+    Router.go('/');
   }
 }
 customElements.define('basic-details', BasicDetails);
