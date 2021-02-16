@@ -77,7 +77,7 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
 
   render() {
     return html` <div class="form-basic">
-      <h2>${localize.msg('change-language:loan-details')}</h2>
+      <h2>${localize.msg('change-language:loandetails')}</h2>
       <lion-form>
         <form class="basic-web-form">
           <div class="basic-form">
