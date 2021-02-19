@@ -48,10 +48,16 @@ export class DashboardMenu extends LocalizeMixin(LitElement) {
     Router.go('/details');
   }
 
+  _setTypeInLS() {
+    // console.log(this.title);
+    localStorage.setItem('type', this.title);
+    this.navigateToDetails();
+  }
+
   render() {
     return html`
       <div class="card">
-        <button @click=${this.navigateToDetails}>
+        <button @click=${this._setTypeInLS}>
           <img src=${this.imageURL} alt="loan type" />
           <div class="container">
             <h4><b>${this.title}</b></h4>

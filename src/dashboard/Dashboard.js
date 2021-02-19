@@ -5,6 +5,9 @@ import '../header/Header.js';
 import './Dashboard-overview.js';
 import '../LoanBasicDetails/BasicDetails.js';
 import '../Customer/Customer-details.js';
+import '../LoanEMIDetails/LoanEMIDetails.js';
+import '../SuccessAndError/Success.js';
+import '../SuccessAndError/Error.js';
 
 export class Dashboard extends LitElement {
   static get styles() {
@@ -37,6 +40,9 @@ export class Dashboard extends LitElement {
       { path: '/', component: 'dashboard-overview' },
       { path: '/details', component: 'basic-details' },
       { path: '/customer', component: 'customer-details' },
+      { path: '/emidetails', component: 'loanemi-details' },
+      { path: '/success', component: 'loan-success' },
+      { path: '/error', component: 'loan-error' },
     ]);
   }
 }

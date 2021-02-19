@@ -18,6 +18,7 @@ import {
 import { loadDefaultFeedbackMessages } from '@lion/validate-messages';
 import { localize, LocalizeMixin } from '@lion/localize';
 import '../../locale/inline-data.js';
+import { Router } from '@vaadin/router';
 
 loadDefaultFeedbackMessages();
 export class CustomerDetails extends LocalizeMixin(LitElement) {
@@ -167,7 +168,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               class="form-input"
               style="display:flex ;justify-content: space-around;"
             >
-              <lion-button class="backbg-btn-color" raised
+              <lion-button
+                class="backbg-btn-color"
+                raised
+                @click=${this._toEmidetails}
                 >${localize.msg('change-language:back')}
               </lion-button>
               <lion-button
@@ -175,6 +179,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
                 type="button"
                 id="nextbtn"
                 raised
+                @click=${this._toSuccessError}
                 >${localize.msg('change-language:next')}</lion-button
               >
             </div>
@@ -182,6 +187,21 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         </lion-form>
       </div>
     `;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  _toEmidetails() {
+    Router.go('/details');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  _toSuccessError() {
+    // eslint-disable-next-line no-constant-condition
+    if (true) {
+      Router.go('/success');
+    } else {
+      Router.go('/error');
+    }
   }
 }
 
