@@ -24,11 +24,12 @@ localize.addData('en-GB', 'change-language', {
   title4: 'Vacation Loan',
   // Transalations for Basic Details comp
   loandetails: 'Loan Details',
-  Name: 'Name',
+  Name: 'Type',
   Amount: 'Amount',
   loanPeriod: 'Loan Period',
   btnPrev: 'Previous',
   btnNext: 'Next',
+  btnSubmit: 'Submit',
 
   // Transalations for EMI details comp
   intRate: 'Interest Rate',
@@ -73,11 +74,12 @@ localize.addData('nl-NL', 'change-language', {
 
   // Transalations for Basic Details comp
   loandetails: 'Leninggegevens',
-  Name: 'Naam',
+  Name: 'Type',
   Amount: 'Bedrag',
   loanPeriod: ' Leen Periode',
   btnPrev: 'Vorige',
   btnNext: 'De volgende',
+  btnSubmit: 'indienen',
 
   // Transalations for EMI details comp
   intRate: 'rente',

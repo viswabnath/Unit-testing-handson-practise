@@ -7,6 +7,7 @@ import '@lion/input-range/lion-input-range.js';
 import '@lion/button/lion-button.js';
 import { Router } from '@vaadin/router';
 import { LocalizeMixin, localize } from '@lion/localize';
+import '../LoanEMIDetails/LoanEMIDetails.js';
 // import {inwords} '../utils/numToWord.js';
 
 export class BasicDetails extends LocalizeMixin(LitElement) {
@@ -23,6 +24,13 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
         font-size: 2rem;
         font-family: monospace;
         text-align: center;
+      }
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
       .form-field {
         width: 50%;
@@ -44,6 +52,10 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
         outline: none;
         box-shadow: 10px grey;
       }
+      .emi-details {
+        margin: 5px auto;
+        text-align: center;
+      }
       .btn-previous {
         background-color: #ff0000;
         color: white;
@@ -57,14 +69,26 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
         border-radius: 5px;
         /* width:100px; */
       }
+      .btn-submit {
+        background-color: #009432;
+        color: white;
+        border-radius: 5px;
+        margin: auto;
+      }
       .button-content {
         text-align: left;
       }
       .btn-prev-nxt-parent {
-        margin: 20px auto;
+        margin: 40px auto;
         width: 50%;
         display: flex;
         justify-content: space-between;
+      }
+      .button-content {
+        text-align: center;
+      }
+      .btn:hover {
+        cursor: pointer;
       }
     `;
   }
@@ -73,75 +97,89 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
     super();
     this.amount = 10000;
     this.range = 2;
+    this.emiCalc = 0;
+    this.type = '';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.type = localStorage.getItem('type');
   }
 
   render() {
     return html` <div class="form-basic">
       <h2>${localize.msg('change-language:loandetails')}</h2>
       <lion-form>
-        <form class="basic-web-form">
-          <div class="basic-form">
-            <lion-input
-              label="${localize.msg('change-language:Name')}"
-              type="text"
-              name="name"
-              id="name"
-              class="name"
-              .validators="${[
-                new Required(
-                  {},
-                  { getMessage: () => 'Name is a required field' }
-                ),
-              ]}"
-            ></lion-input>
+        <form class="basic-web-form" @submit=${this._captureDetails}>
+          <!-- <div class="basic-form"> -->
+          <lion-input
+            label="${localize.msg('change-language:Name')}"
+            type="text"
+            name="type"
+            id="type"
+            class="type"
+            disabled="diasbled"
+            .value="${this.type}"
+            .validators="${[
+              new Required(
+                {},
+                { getMessage: () => 'Type is a required field' }
+              ),
+            ]}"
+          ></lion-input>
 
-            <lion-input-amount
-              type="Number"
-              name="amount"
-              id="amount"
-              class="amount"
-              .validators="${[
-                new MinMaxNumber(
-                  { min: 10000, max: 10000000 },
-                  {
-                    getMessage: () =>
-                      'Should enter an amount greater than ten thousand ',
-                  }
-                ),
-                new Required(
-                  {},
-                  { getMessage: () => 'Amount is a required field' }
-                ),
-              ]}"
-              .modelValue="${this.amount}"
-              label="${localize.msg('change-language:Amount')}"
-            >
-              @keyup = ${this._numToWord}
-            </lion-input-amount>
+          <lion-input-amount
+            type="Number"
+            name="amount"
+            id="amount"
+            class="amount"
+            .validators="${[
+              new MinMaxNumber(
+                { min: 10000, max: 10000000 },
+                {
+                  getMessage: () =>
+                    'Should enter an amount greater than ten thousand ',
+                }
+              ),
+              new Required(
+                {},
+                { getMessage: () => 'Amount is a required field' }
+              ),
+            ]}"
+            .modelValue="${this.amount}"
+            label="${localize.msg('change-language:Amount')}"
+          >
+            @keyup = ${this._numToWord}
+          </lion-input-amount>
 
-            <div class="word"></div>
+          <div class="word"></div>
 
-            <lion-input-range
-              style="max-width: 400px;"
-              min="1"
-              max="20"
-              step="1"
-              .modelValue="${this.range}"
-              label="${localize.msg('change-language:loanPeriod')}"
-              name="Period"
-              id="Period"
-              class="period"
-            >
-            </lion-input-range>
-          </div>
+          <lion-input-range
+            style="max-width: 400px;"
+            min="1"
+            max="20"
+            step="1"
+            .modelValue="${this.range}"
+            label="${localize.msg('change-language:loanPeriod')}"
+            name="Period"
+            id="Period"
+            class="period"
+          >
+          </lion-input-range>
+          <!-- </div> -->
+          <lion-button class="btn-submit btn"
+            >${localize.msg('change-language:btnSubmit')}</lion-button
+          >
         </form>
       </lion-form>
 
+      <div id="emi-outlet"></div>
+
       <div class="btn-prev-nxt-parent">
-        <lion-button class="btn-previous" @click=${this._toDashboard}
+        <lion-button class="btn-previous btn" @click=${this._toDashboard}
           >${localize.msg('change-language:btnPrev')}</lion-button
         >
-        <lion-button @click=${this._toCustomer} class="btn-next"
+        <lion-button @click=${this._toCustomer} class="btn-next btn"
           >${localize.msg('change-language:btnNext')}</lion-button
         >
       </div>
@@ -155,22 +193,60 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
   } */
 
   _captureDetails() {
-    // let _name = this.shadowRoot.querySelector('basic-web-form').elements["name"].value;
-    // let _amount = this.shadowRoot.querySelector('basic-web-form').elements["amount"].value;
-    // let _period = this.shadowRoot.querySelector('basic-web-form').elements["period"].value;
-
-    const _name = this.shadowRoot.querySelector('.name').value;
+    const _name = this.shadowRoot.querySelector('.type').value;
     const _amount = this.shadowRoot.querySelector('.amount').value;
     const _period = this.shadowRoot.querySelector('.period').value;
 
+    const basic = { name: _name, amount: _amount, period: _period };
     // eslint-disable-next-line no-console
-    console.log(_name, _amount, _period);
+    // console.log(basic);
     // e.preventDefault();
+
+    fetch('http://localhost:3000/calculate-emi', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(basic),
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.emiCalc = data;
+        //  console.log(data);
+      });
+
+    // this.shadowRoot.querySelector('#emi-outlet').innerHTML= `<loanemi-details .data=${this.emiCalc}></loanemi-details>`
+    this.shadowRoot.querySelector(
+      '#emi-outlet'
+    ).innerHTML = ` <div class="emi-details">
+     <h2>EMI Details</h2>
+     <p>
+       ${localize.msg('change-language:intRate')} :<span
+         >${this.emiCalc.interestRate}</span
+       >
+     </p>
+     <p>
+       ${localize.msg('change-language:mnthlyEmi')} :<span
+         >${this.emiCalc.monthlyEMI}</span
+       >
+     </p>
+     <p>
+       ${localize.msg('change-language:pricipal')} :
+       <span>${this.emiCalc.principal}</span>
+     </p>
+     <p>
+       ${localize.msg('change-language:interest')} :
+       <span>${this.emiCalc.interest}</span>
+     </p>
+     <p>
+       ${localize.msg('change-language:TotalAmt')} :
+       <span>${this.emiCalc.totalAmount}</span>
+     </p>
+   </div>`;
   }
 
   _toCustomer() {
-    this._captureDetails();
-    Router.go('/emidetails');
+    Router.go('/customer');
   }
 
   _toDashboard() {
