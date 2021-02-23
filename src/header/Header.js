@@ -12,7 +12,7 @@ export class Header extends LocalizeMixin(LitElement) {
         font-family: sans-serif;
         letter-spacing: 1px;
         font-size: 14px;
-        background-color: #800000;
+        background-color: #ff6200;
       }
       header {
         color: #fff;
