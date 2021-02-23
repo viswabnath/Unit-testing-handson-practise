@@ -191,7 +191,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
 
   // eslint-disable-next-line class-methods-use-this
   _toEmidetails() {
-    Router.go('/details');
+    Router.go('/emidetails');
   }
 
   // eslint-disable-next-line class-methods-use-this

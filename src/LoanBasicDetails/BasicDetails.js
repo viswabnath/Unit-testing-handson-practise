@@ -166,10 +166,6 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
             class="period"
           >
           </lion-input-range>
-          <!-- </div> -->
-          <lion-button class="btn-submit btn"
-            >${localize.msg('change-language:btnSubmit')}</lion-button
-          >
         </form>
       </lion-form>
 
@@ -179,7 +175,7 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
         <lion-button class="btn-previous btn" @click=${this._toDashboard}
           >${localize.msg('change-language:btnPrev')}</lion-button
         >
-        <lion-button @click=${this._toCustomer} class="btn-next btn"
+        <lion-button @click=${this._captureDetails} class="btn-next btn"
           >${localize.msg('change-language:btnNext')}</lion-button
         >
       </div>
@@ -197,9 +193,13 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
     const _amount = this.shadowRoot.querySelector('.amount').value;
     const _period = this.shadowRoot.querySelector('.period').value;
 
+    if (parseFloat(_amount.replace(/,/g, '')) < 10000) {
+      alert('Amount should not be less than 10000');
+      return;
+    }
     const basic = { name: _name, amount: _amount, period: _period };
     // eslint-disable-next-line no-console
-    // console.log(basic);
+    console.log(basic);
     // e.preventDefault();
 
     fetch('http://localhost:3000/calculate-emi', {
@@ -212,41 +212,16 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
       .then(response => response.json())
       .then(data => {
         this.emiCalc = data;
-        //  console.log(data);
+        localStorage.setItem('emi', JSON.stringify(data));
+        console.log(data);
       });
 
-    // this.shadowRoot.querySelector('#emi-outlet').innerHTML= `<loanemi-details .data=${this.emiCalc}></loanemi-details>`
-    this.shadowRoot.querySelector(
-      '#emi-outlet'
-    ).innerHTML = ` <div class="emi-details">
-     <h2>EMI Details</h2>
-     <p>
-       ${localize.msg('change-language:intRate')} :<span
-         >${this.emiCalc.interestRate}</span
-       >
-     </p>
-     <p>
-       ${localize.msg('change-language:mnthlyEmi')} :<span
-         >${this.emiCalc.monthlyEMI}</span
-       >
-     </p>
-     <p>
-       ${localize.msg('change-language:pricipal')} :
-       <span>${this.emiCalc.principal}</span>
-     </p>
-     <p>
-       ${localize.msg('change-language:interest')} :
-       <span>${this.emiCalc.interest}</span>
-     </p>
-     <p>
-       ${localize.msg('change-language:TotalAmt')} :
-       <span>${this.emiCalc.totalAmount}</span>
-     </p>
-   </div>`;
+    this._toEmiDetails();
   }
 
-  _toCustomer() {
-    Router.go('/customer');
+  _toEmiDetails() {
+    console.log(this.emiCalc);
+    Router.go('/emidetails');
   }
 
   _toDashboard() {

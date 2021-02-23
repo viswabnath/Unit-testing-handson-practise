@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import '@lion/button/lion-button.js';
 import { LocalizeMixin, localize } from '@lion/localize';
-// import { Router } from '@vaadin/router';
+import { Router } from '@vaadin/router';
 
 export class LoanEMIDetails extends LocalizeMixin(LitElement) {
   static get styles() {
@@ -44,17 +44,17 @@ export class LoanEMIDetails extends LocalizeMixin(LitElement) {
 
   constructor() {
     super();
-    this._data = {};
+    this._data = '';
   }
 
   connectedCallback() {
     super.connectedCallback();
-    // this.emidata = {...this.data};
+    this._data = JSON.parse(localStorage.getItem('emi'));
+    this.requestUpdate();
   }
 
   static get properties() {
     return {
-      data: { type: Object },
       _data: { type: Object },
     };
   }
@@ -71,39 +71,48 @@ export class LoanEMIDetails extends LocalizeMixin(LitElement) {
           <h2>EMI Details</h2>
           <p>
             ${localize.msg('change-language:intRate')} :<span
-              >${this.data.interestRate}</span
+              >${this._data.interestRate}</span
             >
           </p>
           <p>
             ${localize.msg('change-language:mnthlyEmi')} :<span
-              >${this.data.montlyEMI}</span
+              >${this._data.monthlyEMI}</span
             >
           </p>
           <p>
             ${localize.msg('change-language:pricipal')} :
-            <span>${this.data.principal}</span>
+            <span>${this._data.principal}</span>
           </p>
           <p>
             ${localize.msg('change-language:interest')} :
-            <span>${this.data.interest}</span>
+            <span>${this._data.interest}</span>
           </p>
           <p>
             ${localize.msg('change-language:TotalAmt')} :
-            <span>${this.data.totalAmount}</span>
+            <span>${this._data.totalAmount}</span>
           </p>
+        </div>
+        <div class="btn-cont">
+          <lion-button class="cancel-btn btn" @click=${this._toBasicDetails}
+            >${localize.msg('change-language:btnCancel')}</lion-button
+          >
+          <lion-button @click=${this._toCustomer} class="continue-btn btn"
+            >${localize.msg('change-language:btnCont')}</lion-button
+          >
         </div>
       </div>
     `;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  // _toBasicDetails() {
-  //   Router.go('/details');
-  // }
+  _toBasicDetails() {
+    Router.go('/details');
+    // console.log(this._data);
+  }
 
-  // // eslint-disable-next-line class-methods-use-this
-  // _toCustomer() {
-  //   Router.go('/customer');
-  // }
+  // eslint-disable-next-line class-methods-use-this
+  _toCustomer() {
+    Router.go('/customer');
+  }
 }
 customElements.define('loanemi-details', LoanEMIDetails);
