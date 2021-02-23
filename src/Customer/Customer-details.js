@@ -64,20 +64,39 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
     const mindate = new Date(year - 80, month, day);
     const maxdate = new Date(year, month, day);
 
-    // const checker = document.querySelector('#checkme');
-    // const sendbtn =this.shadowRoot.getElementById('nextbtn');
-    // checker.onchange = function() {
-    //   sendbtn.disabled = !!this.checked;
-    // };
+    const submitHandler = ev => {
+      if (ev.target.hasFeedbackFor.includes('error')) {
+        const firstFormElWithError = ev.target.formElements.find(el =>
+          el.hasFeedbackFor.includes('error')
+        );
+        firstFormElWithError.focus();
+        return;
+      }
+      const formData = ev.target.serializedValue;
+      fetch('http://localhost:3000/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      }).then(response => {
+        if (response.status === 200) {
+          Router.go('/success');
+        } else {
+          Router.go('/error');
+        }
+      });
+    };
 
     return html`
       <div class="container">
         <h2>${localize.msg('change-language:customer')}</h2>
-        <lion-form>
-          <form>
+        <lion-form @submit=${submitHandler}>
+          <form @submit=${ev => ev.preventDefault()}>
             <lion-input
               class="form-input"
               name="first_name"
+              id="first_name"
               label="${localize.msg('change-language:firstname')}"
               .validators=${[
                 new Pattern(/^[a-zA-Z\s]*$/),
@@ -89,6 +108,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             <lion-input
               class="form-input"
               name="last_name"
+              id="last_name"
               label="${localize.msg('change-language:lastname')}"
               .validators=${[
                 new Pattern(/^[a-zA-Z\s]*$/),
@@ -99,7 +119,8 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             </lion-input>
             <lion-input-datepicker
               class="form-input"
-              name="dateofbirth"
+              name="dateof_birth"
+              id="dateof_birth"
               label="${localize.msg('change-language:dateofbirth')}"
               .modelValue=${new Date(today)}
               .validators=${[
@@ -113,6 +134,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             <lion-input-email
               class="form-input"
               name="email"
+              id="email"
               .validators=${[
                 new Pattern(
                   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -125,6 +147,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             <lion-input
               class="form-input"
               name="mobile_number"
+              id="mobile_number"
               label="${localize.msg('change-language:mobilenumber')}"
               .validators=${[
                 new Pattern(/(6|7|8|9)\d{9}/),
@@ -136,14 +159,16 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             </lion-input>
             <lion-input-amount
               class="form-input"
-              name="monthly salary"
+              name="monthly_salary"
+              id="monthly_salary"
               label="${localize.msg('change-language:monthlysalary')}"
               .validators=${[new Required()]}
             >
             </lion-input-amount>
             <lion-input-amount
               class="form-input"
-              name="EMIs amount"
+              name="EMIs_amount"
+              id="EMIs_amount"
               label="${localize.msg('change-language:previousemi')}"
               .validators=${[new Required()]}
             >
@@ -152,7 +177,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             <lion-checkbox-group
               class="form-input"
               id="terms"
-              name="terms[]"
+              name="terms"
               .validators="${[
                 new Required(null, {
                   getMessage: () => 'Please select to continue',
@@ -174,12 +199,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
                 @click=${this._toEmidetails}
                 >${localize.msg('change-language:back')}
               </lion-button>
-              <lion-button
-                class="nextbg-btn-color"
-                type="button"
-                id="nextbtn"
-                raised
-                @click=${this._toSuccessError}
+              <lion-button class="nextbg-btn-color" id="nextbtn" raised
                 >${localize.msg('change-language:next')}</lion-button
               >
             </div>
@@ -192,16 +212,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
   // eslint-disable-next-line class-methods-use-this
   _toEmidetails() {
     Router.go('/details');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  _toSuccessError() {
-    // eslint-disable-next-line no-constant-condition
-    if (true) {
-      Router.go('/success');
-    } else {
-      Router.go('/error');
-    }
   }
 }
 
