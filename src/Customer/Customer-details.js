@@ -73,7 +73,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         return;
       }
       const formData = ev.target.serializedValue;
-      fetch('http://localhost:3000/submit-form', {
+      fetch('https://loanfeapi.herokuapp.com/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
