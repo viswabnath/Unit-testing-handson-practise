@@ -25,7 +25,11 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
   static get styles() {
     return css`
       :host {
-        margin: 0;
+        display: block;
+        padding: 25px;
+        color: var(--loan-application-text-color, #000);
+        font-family: monospace;
+        font-size: 1.5rem;
       }
       .container {
         width: 60%;
@@ -37,17 +41,72 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         margin: auto;
         flex-wrap: wrap;
         padding: 20px;
+        font-family: monospace;
+        font-size: 1.25rem;
+      }
+      h2 {
+        font-size: 2rem;
+        font-family: monospace;
+        text-align: center;
       }
       .form-input {
         margin: 10px;
       }
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
       .backbg-btn-color {
-        background-color: grey;
+        background-color: #ff0000;
+        color: white;
+        border-radius: 5px;
         cursor: pointer;
       }
       .nextbg-btn-color {
-        background-color: green;
+        background-color: dodgerblue;
+        color: white;
+        border-radius: 5px;
         cursor: pointer;
+      }
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .form-field {
+        width: 80%;
+        padding: 10px 5px;
+        margin: auto;
+        height: 5%;
+      }
+      .form-basic {
+        margin: auto;
+      }
+      input {
+        height: 25px;
+        padding: 4px;
+        text-transform: capitalize;
+        border: 2px solid grey;
+        border-radius: 5px;
+      }
+      .form-control:focus {
+        outline: none;
+        box-shadow: 10px grey;
+      }
+
+      .btn-cont {
+        margin: 30px auto;
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+      }
+      #lion-input-datepicker-v2y6kdfw3x {
+        height: 25px;
       }
     `;
   }
@@ -62,7 +121,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
     const month = today.getMonth();
     const day = today.getDate();
     const mindate = new Date(year - 80, month, day);
-    const maxdate = new Date(year, month, day);
+    const maxdate = new Date(year - 18, month, day);
 
     const submitHandler = ev => {
       if (ev.target.hasFeedbackFor.includes('error')) {
@@ -101,7 +160,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               .validators=${[
                 new Pattern(/^[a-zA-Z\s]*$/),
                 new MinLength(3),
-                new Required(),
+                new Required(
+                  {},
+                  { getMessage: () => 'First name is a required field' }
+                ),
               ]}
             >
             </lion-input>
@@ -113,7 +175,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               .validators=${[
                 new Pattern(/^[a-zA-Z\s]*$/),
                 new MinLength(3),
-                new Required(),
+                new Required(
+                  {},
+                  { getMessage: () => 'Last name is a required field' }
+                ),
               ]}
             >
             </lion-input>
@@ -122,7 +187,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               name="dateof_birth"
               id="dateof_birth"
               label="${localize.msg('change-language:dateofbirth')}"
-              .modelValue=${new Date(today)}
+              .modelValue=${new Date(maxdate)}
               .validators=${[
                 new MinMaxDate({
                   min: new Date(mindate),
@@ -139,7 +204,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
                 new Pattern(
                   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
                 ),
-                new Required(),
+                new Required(
+                  {},
+                  { getMessage: () => 'E-mail is a required field' }
+                ),
               ]}
               label="${localize.msg('change-language:email')}"
             >
@@ -153,7 +221,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
                 new Pattern(/(6|7|8|9)\d{9}/),
                 new MinLength(10),
                 new MaxLength(10),
-                new Required(),
+                new Required(
+                  {},
+                  { getMessage: () => 'Mobile Number is a required field' }
+                ),
               ]}
             >
             </lion-input>
@@ -162,7 +233,12 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               name="monthly_salary"
               id="monthly_salary"
               label="${localize.msg('change-language:monthlysalary')}"
-              .validators=${[new Required()]}
+              .validators=${[
+                new Required(
+                  {},
+                  { getMessage: () => 'Monthly salary is a required field' }
+                ),
+              ]}
             >
             </lion-input-amount>
             <lion-input-amount
@@ -170,7 +246,12 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               name="EMIs_amount"
               id="EMIs_amount"
               label="${localize.msg('change-language:previousemi')}"
-              .validators=${[new Required()]}
+              .validators=${[
+                new Required(
+                  {},
+                  { getMessage: () => 'Previous EMI is a required field' }
+                ),
+              ]}
             >
             </lion-input-amount>
 
@@ -193,16 +274,19 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               class="form-input"
               style="display:flex ;justify-content: space-around;"
             >
-              <lion-button
-                class="backbg-btn-color"
-                raised
-                @click=${this._toEmidetails}
-                >${localize.msg('change-language:back')}
-              </lion-button>
-              <lion-button class="nextbg-btn-color" id="nextbtn" raised
-                >${localize.msg('change-language:next')}</lion-button
-              >
             </div>
+            <div class="btn-cont">
+            <lion-button
+              class="backbg-btn-color"
+              raised
+              @click=${this._toEmidetails}
+              >${localize.msg('change-language:back')}
+            </lion-button>
+
+            <lion-button class="nextbg-btn-color" id="nextbtn" raised
+              >${localize.msg('change-language:next')}</lion-button
+            >
+            <div>
           </form>
         </lion-form>
       </div>
