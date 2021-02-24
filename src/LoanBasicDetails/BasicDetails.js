@@ -7,6 +7,7 @@ import '@lion/input-range/lion-input-range.js';
 import '@lion/button/lion-button.js';
 import { Router } from '@vaadin/router';
 import { LocalizeMixin, localize } from '@lion/localize';
+// import { LionProgressIndicator } from '@lion/progress-indicator';
 import '../LoanEMIDetails/LoanEMIDetails.js';
 // import {inwords} '../utils/numToWord.js';
 
@@ -194,7 +195,7 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
     const _period = this.shadowRoot.querySelector('.period').value;
 
     if (parseFloat(_amount.replace(/,/g, '')) < 10000) {
-      alert('Amount should not be less than 10000');
+      // alert('Amount should not be less than 10000');
       return;
     }
     const basic = { name: _name, amount: _amount, period: _period };
@@ -202,7 +203,7 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
     console.log(basic);
     // e.preventDefault();
 
-    fetch('http://localhost:3000/calculate-emi', {
+    fetch('https://loanfeapi.herokuapp.com/calculate-emi', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -213,16 +214,16 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
       .then(data => {
         this.emiCalc = data;
         localStorage.setItem('emi', JSON.stringify(data));
-        console.log(data);
+        Router.go('/emidetails');
+        // console.log(data);
       });
-
-    this._toEmiDetails();
   }
 
-  _toEmiDetails() {
-    console.log(this.emiCalc);
+  /*   _toEmiDetails() {
+    // console.log(this.emiCalc);
     Router.go('/emidetails');
-  }
+    // ;
+  } */
 
   _toDashboard() {
     Router.go('/');
