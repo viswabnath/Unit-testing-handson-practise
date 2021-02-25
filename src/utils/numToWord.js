@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line func-names
 export const inWords = function (num) {
@@ -75,7 +76,6 @@ export const inWords = function (num) {
       : '';
   return str;
 };
-
 // // document.getElementById('number').onkeyup = function () {
 // //     document.getElementById('words').innerHTML = inWords(document.getElementById('number').value);
 // // };
