@@ -85,6 +85,9 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
       .error-handle > input {
         border: 3px solid red;
       }
+      .chk {
+        // display:flex;
+      }
     `;
   }
 
@@ -230,7 +233,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             </lion-input-amount>
 
             <lion-checkbox-group
-              class="checkbox"
               id="terms"
               name="terms"
               .validators=${[
