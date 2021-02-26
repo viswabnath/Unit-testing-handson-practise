@@ -236,7 +236,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               .validators=${[
                 new Required(
                   {},
-                  { getMessage: () => 'Please select terms and conditions' }
+                  {
+                    getMessage: () =>
+                      'Please select terms and conditions to continue',
+                  }
                 ),
               ]}
             >
