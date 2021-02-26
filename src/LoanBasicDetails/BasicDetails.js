@@ -9,7 +9,10 @@ import { Router } from '@vaadin/router';
 import { LocalizeMixin, localize } from '@lion/localize';
 // import { LionProgressIndicator } from '@lion/progress-indicator';
 import '../LoanEMIDetails/LoanEMIDetails.js';
-// import {inwords} '../utils/numToWord.js';
+
+import { inWords } from '../utils/numToWord.js';
+
+// import {numWords} from 'num-words';
 
 export class BasicDetails extends LocalizeMixin(LitElement) {
   static get styles() {
@@ -91,6 +94,13 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
       .btn:hover {
         cursor: pointer;
       }
+      #word {
+        background-color: #f2a154;
+        padding: 5px 10px;
+        border: 1px black;
+        border-radius: 3px;
+        color: azure;
+      }
     `;
   }
 
@@ -120,6 +130,7 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
             id="type"
             class="type"
             disabled="diasbled"
+            style=" color:black"
             .value="${this.type}"
             .validators="${[
               new Required(
@@ -149,11 +160,11 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
             ]}"
             .modelValue="${this.amount}"
             label="${localize.msg('change-language:Amount')}"
+            @keyup=${this._numToWord}
           >
-            @keyup = ${this._numToWord}
           </lion-input-amount>
 
-          <div class="word"></div>
+          <div id="word"></div>
 
           <lion-input-range
             style="max-width: 400px;"
@@ -170,8 +181,6 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
         </form>
       </lion-form>
 
-      <div id="emi-outlet"></div>
-
       <div class="btn-prev-nxt-parent">
         <lion-button class="btn-previous btn" @click=${this._toDashboard}
           >${localize.msg('change-language:btnPrev')}</lion-button
@@ -183,11 +192,14 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
     </div>`;
   }
 
-  /* _numToWord() {
-    this.shadowRoot.querySelector('.word').innerHTML = inwords(
-      this.shadowRoot.querySelector('.basic-web-form').elements['amount'].value
-    );
-  } */
+  _numToWord() {
+    //  console.log(e.key)
+    const val = this.shadowRoot.querySelector('.amount').value;
+    const num = parseFloat(val.replace(/,/g, ''));
+    this.shadowRoot.querySelector('#word').innerHTML = inWords(num);
+    // this.shadowRoot.querySelector('#word').innerHTML = numWords(num)
+    // console.log(inWords(num))
+  }
 
   _captureDetails() {
     const _name = this.shadowRoot.querySelector('.type').value;
