@@ -101,6 +101,12 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
         border-radius: 3px;
         color: azure;
       }
+      .e-handle > input {
+        border: 2px solid red;
+      }
+      .type > label {
+        color: black;
+      }
     `;
   }
 
@@ -208,6 +214,12 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
 
     if (parseFloat(_amount.replace(/,/g, '')) < 10000) {
       // alert('Amount should not be less than 10000');
+      this.shadowRoot.querySelector('.amount').classList.add('e-handle');
+
+      setTimeout(() => {
+        this.shadowRoot.querySelector('.amount').classList.remove('e-handle');
+      }, 2000);
+
       return;
     }
     const basic = { name: _name, amount: _amount, period: _period };

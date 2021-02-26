@@ -36,7 +36,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         width: 100%;
         margin: 0;
         font-family: sans-serif;
-        letter-spacing: 1px;
+        // letter-spacing: 1px;
         font-size: 14px;
         justify-content: space-evenly;
         margin: auto;
@@ -114,6 +114,9 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
       // }
       .error-handle > input {
         border: 3px solid red;
+      }
+      .chk {
+        // display:flex;
       }
     `;
   }
@@ -267,7 +270,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             </lion-input-amount>
 
             <lion-checkbox-group
-              class="form-input"
+              class="form-input chk"
               id="terms"
               name="terms"
               .validators="${[
