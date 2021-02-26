@@ -25,28 +25,46 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
   static get styles() {
     return css`
       :host {
-        margin: 0;
+        display: block;
+        padding: 25px;
+        color: var(--loan-application-text-color, #000);
+        font-family: monospace;
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 2rem;
+        font-family: monospace;
+        text-align: center;
       }
       .container {
-        width: 60%;
-        margin: 0;
-        font-family: sans-serif;
-        letter-spacing: 1px;
-        font-size: 14px;
-        justify-content: space-evenly;
+        width: 50%;
         margin: auto;
-        flex-wrap: wrap;
-        padding: 20px;
       }
-      .form-input {
-        margin: 10px;
+
+      .form-field {
+        padding: 10px 5px;
+        margin: auto;
+        height: 5%;
       }
+      input {
+        width: 10%;
+        height: 25px;
+        padding: 4px;
+        text-transform: capitalize;
+        border: 2px solid grey;
+        border-radius: 5px;
+      }
+
       .backbg-btn-color {
-        background-color: grey;
+        background-color: #ff0000;
+        color: white;
+        border-radius: 5px;
         cursor: pointer;
       }
       .nextbg-btn-color {
-        background-color: green;
+        background-color: dodgerblue;
+        color: white;
+        border-radius: 5px;
         cursor: pointer;
       }
     `;
@@ -94,7 +112,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         <lion-form @submit=${submitHandler}>
           <form @submit=${ev => ev.preventDefault()}>
             <lion-input
-              class="form-input"
               name="first_name"
               id="first_name"
               label="${localize.msg('change-language:firstname')}"
@@ -106,7 +123,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             >
             </lion-input>
             <lion-input
-              class="form-input"
               name="last_name"
               id="last_name"
               label="${localize.msg('change-language:lastname')}"
@@ -118,7 +134,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             >
             </lion-input>
             <lion-input-datepicker
-              class="form-input"
               name="dateof_birth"
               id="dateof_birth"
               label="${localize.msg('change-language:dateofbirth')}"
@@ -132,7 +147,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             >
             </lion-input-datepicker>
             <lion-input-email
-              class="form-input"
               name="email"
               id="email"
               .validators=${[
@@ -145,7 +159,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             >
             </lion-input-email>
             <lion-input
-              class="form-input"
               name="mobile_number"
               id="mobile_number"
               label="${localize.msg('change-language:mobilenumber')}"
@@ -158,7 +171,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             >
             </lion-input>
             <lion-input-amount
-              class="form-input"
               name="monthly_salary"
               id="monthly_salary"
               label="${localize.msg('change-language:monthlysalary')}"
@@ -166,7 +178,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             >
             </lion-input-amount>
             <lion-input-amount
-              class="form-input"
               name="EMIs_amount"
               id="EMIs_amount"
               label="${localize.msg('change-language:previousemi')}"
@@ -175,14 +186,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
             </lion-input-amount>
 
             <lion-checkbox-group
-              class="form-input"
+              class="checkbox"
               id="terms"
               name="terms"
-              .validators="${[
-                new Required(null, {
-                  getMessage: () => 'Please select to continue',
-                }),
-              ]}"
+              .validators="${[new Required()]}"
             >
               <lion-checkbox
                 id="terms"
@@ -190,8 +197,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               ></lion-checkbox>
             </lion-checkbox-group>
             <div
-              class="form-input"
-              style="display:flex ;justify-content: space-around;"
+              style=" margin: 40px auto;
+              width: 50%;
+              display: flex;
+              justify-content: space-between;"
             >
               <lion-button
                 class="backbg-btn-color"
