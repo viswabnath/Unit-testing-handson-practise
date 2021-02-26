@@ -33,32 +33,13 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         // background-color:#e8eae6;
       }
       .container {
-        width: 100%;
-        margin: 0;
-        font-family: sans-serif;
-        letter-spacing: 1px;
-        font-size: 14px;
-        justify-content: space-evenly;
+        width: 50%;
         margin: auto;
-        flex-wrap: wrap;
-        padding: 20px;
-        font-family: monospace;
-        font-size: 1.25rem;
       }
       h2 {
         font-size: 2rem;
         font-family: monospace;
         text-align: center;
-      }
-      // .form-input {
-      //   margin: 10px;
-      // }
-      form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
       }
 
       .backbg-btn-color {
@@ -66,7 +47,6 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         color: white;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 150px;
       }
       .nextbg-btn-color {
         background-color: dodgerblue;
@@ -74,21 +54,15 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         border-radius: 5px;
         cursor: pointer;
       }
-      form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+
       .form-field {
-        width: 50%;
         padding: 10px 5px;
         margin: auto;
         height: 5%;
       }
 
       input {
+        width: 20px;
         height: 25px;
         padding: 4px;
         text-transform: capitalize;
@@ -100,12 +74,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         outline: none;
         box-shadow: 10px grey;
       }
-      .btn-cont {
-        margin: 30px auto;
-        width: 50%;
-        display: flex;
-        justify-content: space-between;
-      }
+
       // .error-handle{
       //   border: 2px solid red;
       //   background-color:#f05454;
@@ -264,32 +233,30 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
               class="checkbox"
               id="terms"
               name="terms"
-              .validators="${[new Required()]}"
+              .validators=${[
+                new Required(
+                  {},
+                  { getMessage: () => 'Please select terms and conditions' }
+                ),
+              ]}
             >
               <lion-checkbox
                 id="terms"
                 label="${localize.msg('change-language:checkbox')}"
               ></lion-checkbox>
             </lion-checkbox-group>
-            <div
-              style=" margin: 40px auto;
-              width: 50%;
-              display: flex;
-              justify-content: space-between;"
-            >
-            </div>
-            <div class="btn-cont">
-            <lion-button
-              class="backbg-btn-color"
-              raised
-              @click=${this._toEmidetails}
-              >${localize.msg('change-language:back')}
-            </lion-button>
+            <div style="display:flex ;justify-content: space-between;">
+              <lion-button
+                class="backbg-btn-color"
+                raised
+                @click=${this._toEmidetails}
+                >${localize.msg('change-language:back')}
+              </lion-button>
 
-            <lion-button class="nextbg-btn-color" id="nextbtn" raised
-              >${localize.msg('change-language:next')}</lion-button
-            >
-            <div>
+              <lion-button class="nextbg-btn-color" id="nextbtn" raised
+                >${localize.msg('change-language:next')}</lion-button
+              >
+            </div>
           </form>
         </lion-form>
       </div>
