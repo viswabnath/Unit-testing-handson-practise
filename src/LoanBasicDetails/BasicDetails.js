@@ -9,7 +9,10 @@ import { Router } from '@vaadin/router';
 import { LocalizeMixin, localize } from '@lion/localize';
 // import { LionProgressIndicator } from '@lion/progress-indicator';
 import '../LoanEMIDetails/LoanEMIDetails.js';
+
 import { inWords } from '../utils/numToWord.js';
+
+// import {numWords} from 'num-words';
 
 export class BasicDetails extends LocalizeMixin(LitElement) {
   static get styles() {
@@ -194,6 +197,7 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
     const val = this.shadowRoot.querySelector('.amount').value;
     const num = parseFloat(val.replace(/,/g, ''));
     this.shadowRoot.querySelector('#word').innerHTML = inWords(num);
+    // this.shadowRoot.querySelector('#word').innerHTML = numWords(num)
     // console.log(inWords(num))
   }
 

@@ -125,6 +125,7 @@ export const inWords = function (num) {
     .substr(-9)
     .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
   if (!n) return;
+  if (num == 0) return 'Zero';
   let str = '';
   str +=
     n[1] != 0

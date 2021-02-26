@@ -30,9 +30,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         color: var(--loan-application-text-color, #000);
         font-family: monospace;
         font-size: 1.5rem;
+        // background-color:#e8eae6;
       }
       .container {
-        width: 60%;
+        width: 100%;
         margin: 0;
         font-family: sans-serif;
         letter-spacing: 1px;
@@ -49,9 +50,9 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         font-family: monospace;
         text-align: center;
       }
-      .form-input {
-        margin: 10px;
-      }
+      // .form-input {
+      //   margin: 10px;
+      // }
       form {
         width: 100%;
         display: flex;
@@ -64,6 +65,7 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         color: white;
         border-radius: 5px;
         cursor: pointer;
+        margin-left: 150px;
       }
       .nextbg-btn-color {
         background-color: dodgerblue;
@@ -79,34 +81,39 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
         align-items: center;
       }
       .form-field {
-        width: 80%;
+        width: 50%;
         padding: 10px 5px;
         margin: auto;
         height: 5%;
       }
-      .form-basic {
-        margin: auto;
-      }
+
       input {
         height: 25px;
         padding: 4px;
         text-transform: capitalize;
-        border: 2px solid grey;
+        border: 2px solid black;
         border-radius: 5px;
+        background-color: #f4f4f4;
       }
       .form-control:focus {
         outline: none;
         box-shadow: 10px grey;
       }
-
       .btn-cont {
         margin: 30px auto;
         width: 50%;
         display: flex;
         justify-content: space-between;
       }
-      #lion-input-datepicker-v2y6kdfw3x {
-        height: 25px;
+      // .error-handle{
+      //   border: 2px solid red;
+      //   background-color:#f05454;
+      //   padding: 5px 10px;
+      //   border-radius:5px;
+      //   color:azure;
+      // }
+      .error-handle > input {
+        border: 3px solid red;
       }
     `;
   }
@@ -129,6 +136,10 @@ export class CustomerDetails extends LocalizeMixin(LitElement) {
           el.hasFeedbackFor.includes('error')
         );
         firstFormElWithError.focus();
+        firstFormElWithError.classList.add('error-handle');
+        setTimeout(() => {
+          firstFormElWithError.classList.remove('error-handle');
+        }, 2000);
         return;
       }
       const formData = ev.target.serializedValue;
