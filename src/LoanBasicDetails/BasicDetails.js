@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { html, css, LitElement } from 'lit-element';
-import { Required, MinMaxNumber } from '@lion/form-core';
+import { Required, MinNumber, MaxNumber } from '@lion/form-core';
 import '@lion/input/lion-input.js';
 import '@lion/input-amount/lion-input-amount.js';
 import '@lion/input-range/lion-input-range.js';
@@ -152,11 +152,18 @@ export class BasicDetails extends LocalizeMixin(LitElement) {
             id="amount"
             class="amount"
             .validators="${[
-              new MinMaxNumber(
-                { min: 10000, max: 10000000 },
+              new MinNumber(
+                { min: 10000 },
                 {
                   getMessage: () =>
                     'Should enter an amount greater than ten thousand ',
+                }
+              ),
+              new MaxNumber(
+                { max: 10000000 },
+                {
+                  getMessage: () =>
+                    'Should enter an amount less than ten crore ',
                 }
               ),
               new Required(
