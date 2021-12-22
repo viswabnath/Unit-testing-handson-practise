@@ -1,46 +1,18 @@
-# \<loan-application>
+# Loan Application
 
 This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
 
-## Installation
+## Steps to start handson
+1. Login/Signup Own Github account
+2. Fork this repository to your own Github
+3. Clone the code 
 ```bash
-npm i loan-application
+git clone <gitrepo-url>
 ```
-
-## Usage
-```html
-<script type="module">
-  import 'loan-application/loan-application.js';
-</script>
-
-<loan-application></loan-application>
-```
-
-## Linting with ESLint, Prettier, and Types
-To scan the project for linting errors, run
+4. Update Node version to 14.16.1 or above LTS version
+## Install all dependencies
 ```bash
-npm run lint
-```
-
-You can lint with ESLint and Prettier individually as well
-```bash
-npm run lint:eslint
-```
-```bash
-npm run lint:prettier
-```
-
-To automatically fix many linting errors, run
-```bash
-npm run format
-```
-
-You can format using ESLint and Prettier individually as well
-```bash
-npm run format:eslint
-```
-```bash
-npm run format:prettier
+npm i
 ```
 
 ## Testing with Web Test Runner
@@ -60,21 +32,21 @@ To run a local instance of Storybook for your component, run
 ```bash
 npm run storybook
 ```
-
-To build a production version of Storybook, run
-```bash
-npm run storybook:build
-```
-
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
-
 ## Local Demo with `web-dev-server`
 ```bash
 npm start
 ```
-To run a local development server that serves the basic demo located in `demo/index.html`
+
+To resolve CORS issues while calling API from localhost, install `CORS Unblock` extension in chrome and  enable all 3 options.
+
+## Commit & Push test files
+```bash
+git add filename
+
+git config --global user.email `email address`
+
+git config --global user.name `username`
+
+git commit -m <msg>
+```
+
