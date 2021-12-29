@@ -10,6 +10,10 @@ This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) reco
 git clone <gitrepo-url>
 ```
 4. Update Node version to 14.16.1 or above LTS version
+
+## Generate Personal Access Token
+Go to my account > Settings > Developer settings > Personal access tokens > Generate new token
+Choose all scopes and click generate token
 ## Install all dependencies
 ```bash
 npm i
@@ -48,5 +52,9 @@ git config --global user.email `email address`
 git config --global user.name `username`
 
 git commit -m <msg>
+
+git remote set-url origin https://<token>@github.com/<username>/<reponame>
+
+git push
 ```
 
